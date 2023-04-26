@@ -7,6 +7,34 @@ from PIL import Image
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
+# def imageAPI(input):
+#     r = requests.post(
+#     "https://api.deepai.org/api/text2img",
+#     data={
+#         'text': input,
+#     },
+#     headers={'api-key': '33b734c1-0dc3-47a1-a8e8-0f13ea123127'}
+#     )
+#     print(r.json())
+
+# imageAPI("pug")
+def get_pixabay_image(query):
+    print(type(query))
+    url = 'https://pixabay.com/api/28306119-deb558f16f7c1989434e2b594'
+    url2 = "https://pixabay.com/api/?key=28306119-deb558f16f7c1989434e2b594&q="
+   
+    response = requests.get(url2+query)
+    if response.status_code == 200:
+        data = response.json()
+        if data['totalHits'] > 0:
+            return data['hits'][0]['webformatURL']
+    print(response.status_code)
+    # else:
+    #     return None
+
+image_url = get_pixabay_image('steak and rice')
+print(image_url)
+
 @app.route('/')
 def home():
     return render_template('index.html')
