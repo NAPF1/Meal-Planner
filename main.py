@@ -7,17 +7,6 @@ from PIL import Image
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
-# def imageAPI(input):
-#     r = requests.post(
-#     "https://api.deepai.org/api/text2img",
-#     data={
-#         'text': input,
-#     },
-#     headers={'api-key': '33b734c1-0dc3-47a1-a8e8-0f13ea123127'}
-#     )
-#     print(r.json())
-
-# imageAPI("pug")
 def get_pixabay_image(query):
     print(type(query))
     url = 'https://pixabay.com/api/28306119-deb558f16f7c1989434e2b594'
