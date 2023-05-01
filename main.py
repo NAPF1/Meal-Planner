@@ -21,8 +21,21 @@ def get_pixabay_image(query):
     # else:
     #     return None
 
-image_url = get_pixabay_image('steak and rice')
-print(image_url)
+def get_calories(ingredient):
+    api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(ingredient)
+    response = requests.get(api_url, headers={'X-Api-Key': 'k8A8yajuNt3XDt+amiDpOg==TcDK914bT5PP0tuz'})
+    if response.status_code == 200:
+        data = response.json()
+        print(data[0]['calories'])
+        print(data[0]['serving_size_g'])
+    print(response.status_code)
+
+
+calories = get_calories('marinara sauce')
+print(calories)
+
+# image_url = get_pixabay_image('steak and rice')
+# print(image_url)
 
 @app.route('/')
 def home():
