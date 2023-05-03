@@ -42,6 +42,11 @@ def home():
     return render_template('index.html')
 
 
-# @app.route('/list')
-# def list():
-#     return render_template('list.html')
+@app.route('/list')
+def list():
+    return render_template('list.html')
+
+
+@app.route('/meal')
+def meal():
+    return render_template('addmeal.html')
