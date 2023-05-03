@@ -6,10 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  background-color: #1093fd;
+  padding: 5px;
+}
+.grid-item {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+</style>
 </head>
 <body class="bg-dark text-white">
     <h1>Weekly View</h1>
-    <br>
-    Hi I am the weekly view so far.
+    <div class="grid-container">
+        <div class="grid-item">Sunday</div>
+        <div class="grid-item">Monday</div>
+        <div class="grid-item">Tuesday</div>
+        <div class="grid-item">Wednesday</div>
+        <div class="grid-item">Thursday</div>
+        <div class="grid-item">Friday</div>
+        <div class="grid-item">Saturday</div>
+        <div class="grid-item">{{meals[0]['name']}}</div>
+        <div class="grid-item">{{meals[1]['name']}}</div>
+        <div class="grid-item">{{meals[2]['name']}}</div>
+        <div class="grid-item">{{meals[3]['name']}}</div>
+        <div class="grid-item">{{meals[4]['name']}}</div>
+        <div class="grid-item">{{meals[5]['name']}}</div>
+        <div class="grid-item">{{meals[6]['name']}}</div>
+    </div>
 </body>
 </html>

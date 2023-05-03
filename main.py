@@ -39,7 +39,7 @@ print(calories)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', meals=meals_info)
 
 
 # @app.route('/list')
