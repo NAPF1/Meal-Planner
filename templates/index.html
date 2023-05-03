@@ -9,23 +9,31 @@
     {{ bootstrap.load_css() }}
 <style>
 
-body
+/* body
 {
  background-color:#212529
-}
+} */
 
 h1 {
   color: white;
   margin-top: 50px;
   padding: 10px;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  background-color: #1093fd;
+  padding: 5px;
+}
+.grid-item {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}
 </style>
 </head>
-<body>
-    
-  
-
-
+<body class="bg-dark text-white">
     
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
   <div class="container-fluid">
@@ -56,5 +64,23 @@ h1 {
 <h1 class="container-fluid py-5" >Start Your Weekly Meal Plan </h1>
 
 <button class="btn btn-primary btn-lg">Add Meal</button>
+
+<h1>Weekly View</h1>
+  <div class="grid-container">
+    <div class="grid-item">Sunday</div>
+    <div class="grid-item">Monday</div>
+    <div class="grid-item">Tuesday</div>
+    <div class="grid-item">Wednesday</div>
+    <div class="grid-item">Thursday</div>
+    <div class="grid-item">Friday</div>
+    <div class="grid-item">Saturday</div>
+    <div class="grid-item">{{meals[0]['name']}}</div>
+    <div class="grid-item">{{meals[1]['name']}}</div>
+    <div class="grid-item">{{meals[2]['name']}}</div>
+    <div class="grid-item">{{meals[3]['name']}}</div>
+    <div class="grid-item">{{meals[4]['name']}}</div>
+    <div class="grid-item">{{meals[5]['name']}}</div>
+    <div class="grid-item">{{meals[6]['name']}}</div>
+  </div>
 </body>
 </html>
