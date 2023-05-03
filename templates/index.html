@@ -33,7 +33,7 @@ h1 {
 }
 </style>
 </head>
-<body>
+<body class="bg-dark text-white">
     
   
 
@@ -51,7 +51,7 @@ h1 {
           <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('list') }}">Groccery List</a>
+          <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
         </li>
 
         <li class="nav-item">
@@ -66,7 +66,22 @@ h1 {
 
 
 <h1 class="container-fluid py-5" >Start Your Weekly Meal Plan </h1>
+  <div class="grid-container">
+    <div class="grid-item">Sunday</div>
+    <div class="grid-item">Monday</div>
+    <div class="grid-item">Tuesday</div>
+    <div class="grid-item">Wednesday</div>
+    <div class="grid-item">Thursday</div>
+    <div class="grid-item">Friday</div>
+    <div class="grid-item">Saturday</div>
+    <div class="grid-item">{{meals[0]['name']}}</div>
+    <div class="grid-item">{{meals[1]['name']}}</div>
+    <div class="grid-item">{{meals[2]['name']}}</div>
+    <div class="grid-item">{{meals[3]['name']}}</div>
+    <div class="grid-item">{{meals[4]['name']}}</div>
+    <div class="grid-item">{{meals[5]['name']}}</div>
+    <div class="grid-item">{{meals[6]['name']}}</div>
+  </div>
 
-<button class="btn btn-primary btn-lg">Add Meal</button>
 </body>
 </html>
