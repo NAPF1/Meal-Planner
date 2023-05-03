@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
-from meals import meals_info
+from meals import meals_info as meals
 import requests
 from PIL import Image
 
@@ -39,7 +39,7 @@ print(calories)
 
 @app.route('/')
 def home():
-    return render_template('index.html', meals=meals_info)
+    return render_template('index.html', meals=meals)
 
 
 # @app.route('/list')
