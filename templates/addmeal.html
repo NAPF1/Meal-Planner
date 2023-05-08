@@ -9,49 +9,33 @@
     {{ bootstrap.load_css() }}
 <style>
 
-body
-{
- background-color:#212529
-}
 
-h1 {
-  color: white;
-  margin-top: 50px;
-  padding: 10px;
-}
 </style>
 </head>
-<body>
-    
-  
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
-  <div class="container-fluid">
+<body class="bg-dark text-white">
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
-        </li>
-        
-      </ul>
-      
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-
-<h1 class="container-fluid py-5" >Add Meal Plan</h1>
-
+<h1 class="container-fluid py-5" >Add a Meal</h1>
 
 
 </body>
