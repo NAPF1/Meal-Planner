@@ -64,14 +64,36 @@
       <div class="grid-item">Saturday</div>
 
       {% for i in range(7) %}
+      <!-- <form action="/list" method="POST">   -->
         <div class="grid-item">
-          <select>
+          <select id="{{i}}" onchange="updateList()">
+          <!-- <select> -->
             {% for meal in meals %}
               <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
             {% endfor %}
           </select>
         </div>
+      <!-- </form> -->
       {% endfor %}
 
 </body>
+<script>
+  async function updateList() {
+
+    data = []
+    for (let i = 0; i < 7; i++) {
+      data[i] = document.getElementById(i).value;
+    }
+    console.log(data);
+
+    await fetch('/list', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  }
+</script>
 </html>

@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
-import requests
 from PIL import Image
+import requests
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
@@ -37,15 +37,31 @@ print(calories)
 # image_url = get_pixabay_image('steak and rice')
 # print(image_url)
 
+
+
 @app.route('/')
 def home():
     return render_template('index.html', meals=meals)
 
 
-@app.route('/list')
+@app.route('/list', methods=['POST'])
 def list():
-    return render_template('list.html')
+    names = [] # For transferring selected meals to the list route
+    names.append(request.form['m1'], request.form['m2'], request.form['m3'], 
+                    request.form['m4'], request.form['m5'], request.form['m6'], 
+                    request.form['m7']) # Fetches all selected meals and creates list
+    
+    ingredients = [] # Master ingredients list for populating div in list.html
+    for meal in meals: # For each available meal
+        for name in names: # And for each selected meal
+            if meal['name'] == name: # If the available meal matches a selected meal
+                for ingredient in meal['ingredients']: # Cycle thorugh those ingredients
+                    ingredients.append(ingredient) # Add each ingredient to master list
 
+    print(ingredients)
+    # ingredients = ingredients.sort()
+    return render_template('list.html', ingredients=ingredients)
+    # return ingredients
 
 @app.route('/meal')
 def meal():
