@@ -10,24 +10,19 @@
 <style>
   .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto;
-    background-color: #1093fd;
+    margin: 0 auto;
+    grid-template-rows: repeat(7,1fr);
+    grid-template-columns: repeat(2,1fr);
+    background-color: #0361ad;
     padding: 5px;
+    width: 50vw;
   }
   .grid-item {
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
     font-size: 20px;
     text-align: center;
   }
-  select {
-  width: 200px;
-  overflow: auto;
-  }
-  option {
-    width: 200px;
-  }
-
 </style>
 </head>
 <body class="bg-dark text-white">
@@ -54,46 +49,71 @@
   </nav>
 
   <h1 class="container-fluid py-5" >Start Your Weekly Meal Plan </h1>
+
+  <form id="meal-form" method="POST" action="{{ url_for('list') }}">
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+      <button type="submit" class="btn btn-primary">Get List</button>
+    </div>
     <div class="grid-container">
       <div class="grid-item">Sunday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Sunday" id="sun">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Monday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Monday" id="mon">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Tuesday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Tuesday" id="tues">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Wednesday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Wednesday" id="wed">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Thursday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Thursday" id="thurs">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Friday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Friday" id="fri">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <div class="grid-item">Saturday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Saturday" id="sat">
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </form>
 
-      {% for i in range(7) %}
-      <!-- <form action="/list" method="POST">   -->
-        <div class="grid-item">
-          <select id="{{i}}" onchange="updateList()">
-          <!-- <select> -->
-            {% for meal in meals %}
-              <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      <!-- </form> -->
-      {% endfor %}
 
 </body>
-<script>
-  async function updateList() {
-
-    data = []
-    for (let i = 0; i < 7; i++) {
-      data[i] = document.getElementById(i).value;
-    }
-    console.log(data);
-
-    await fetch('/list', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-  }
-</script>
 </html>

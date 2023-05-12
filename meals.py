@@ -1,6 +1,6 @@
 meals_info = [
   {
-    "name" : "None",
+    "name" : "Skip",
     "ingredients" : [],
     "img_url" : ""
   },

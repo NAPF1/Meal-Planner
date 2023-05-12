@@ -8,8 +8,21 @@
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
 <style>
-
-
+  .grid-container {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(1,1fr);
+    background-color: #0361ad;
+    padding: 5px;
+    width: 50vw;
+  }
+  .grid-item {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }    
 </style>
 </head>
 <body class="bg-dark text-white">
@@ -35,13 +48,16 @@
     </div>
   </nav>
 
-
 <h1 class="container-fluid py-5" >Grocery List </h1>
 
-<div id="ingredients">
-<!-- Should auto-populate ingredients here upon changing of dropdowns -->
+<div class="grid-container">
   {% for i in ingredients %}
-    <div>{{i}}</div>
+    <div class="grid-item">
+      {{ i }}
+    </div>
+    <div class="grid-item">
+      x{{ ingredients[i] }}
+    </div>
   {% endfor %}
 </div>
 
