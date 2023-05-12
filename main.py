@@ -52,7 +52,7 @@ def get_ingredients(names):
 def home():
     return render_template('index.html', meals=meals)
 
-# Grocery List route
+# Grocery List route (Displays EMPTY grid when routed from navbar!)
 @app.route('/list', methods=['GET', 'POST'])
 def list():
     selected_meals = [] # New list every time
