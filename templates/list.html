@@ -8,49 +8,58 @@
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
 <style>
-
-body
-{
- background-color:#212529
-}
-
-h1 {
-  color: white;
-  margin-top: 50px;
-  padding: 10px;
-}
+  .grid-container {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(1,1fr);
+    background-color: #0361ad;
+    padding: 5px;
+    width: 50vw;
+  }
+  .grid-item {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }    
 </style>
 </head>
-<body>
+<body class="bg-dark text-white">
     
-  
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
-  <div class="container-fluid">
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
-        </li>
-        
-      </ul>
-      
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('list') }}">Grocery List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
+<h1 class="container-fluid py-5 text-center" >Grocery List </h1>
 
-<h1 class="container-fluid py-5" >Groccery List </h1>
+<div class="grid-container">
+  {% for i in ingredients %}
+    <div class="grid-item">
+      {{ i }}
+    </div>
+    <div class="grid-item">
+      x{{ ingredients[i] }}
+    </div>
+  {% endfor %}
+</div>
 
 
 </body>

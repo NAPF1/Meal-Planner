@@ -1,11 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
-import requests
 from PIL import Image
+import requests
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
+days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 def get_pixabay_image(query):
     print(type(query))
@@ -37,16 +38,35 @@ print(calories)
 # image_url = get_pixabay_image('steak and rice')
 # print(image_url)
 
+def get_ingredients(names):
+    ingredients = [] # Master ingredients list for populating div in list.html
+    for meal in meals: # For each available meal
+        for name in names: # And for each selected meal
+            if meal['name'] == name: # If the available meal matches a selected meal
+                for ingredient in meal['ingredients']: # Cycle thorugh those ingredients
+                    ingredients.append(ingredient) # Add each ingredient to master list
+    return ingredients
+
 @app.route('/')
 def home():
     return render_template('index.html', meals=meals)
 
-
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def list():
-    return render_template('list.html')
+    selected_meals = []
+    for day in days:
+        selected_meals.append(request.form.get(day))
+    ings = get_ingredients(selected_meals)
 
+    ingredients = {}
+    for ing in ings:
+        if ing in ingredients:
+            ingredients[ing] += 1
+        else:
+            ingredients[ing] = 1
 
+    return render_template('list.html', ingredients=ingredients)
+    
 @app.route('/meal')
 def meal():
     return render_template('addmeal.html', meals=meals)
