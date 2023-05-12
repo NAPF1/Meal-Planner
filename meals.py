@@ -1,10 +1,5 @@
 meals_info = [
   {
-    "name" : "Skip",
-    "ingredients" : [],
-    "img_url" : ""
-  },
-  {
     "name" : "Bolognese Spaghetti Squash Pasta with Bread",
     "ingredients" : ['Spaghetti Squash', 'Bolognese Sauce', 'Spicy Sausage', 'Homemade Bread'],
     "img_url" : "https://everydaydishes.com/wp-content/uploads/2022/08/macro-friendly-dinner-recipes-spaghetti-squash--scaled.jpg"

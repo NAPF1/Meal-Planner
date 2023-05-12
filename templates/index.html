@@ -27,6 +27,7 @@
 </head>
 <body class="bg-dark text-white">
     
+  <!-- Navigation bar -->
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,76 +42,93 @@
             <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('meal') }}">Add Meal</a>
+            <a class="nav-link" href="{{ url_for('meal') }}">View/Edit Meals</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <!-- Heading of Page -->
   <h1 class="container-fluid py-5 text-center" >Start Your Weekly Meal Plan </h1>
 
+  <!-- Grid container for days and dropdown boxes containing all meals in meals.py -->
   <form id="meal-form" method="POST" action="{{ url_for('list') }}">
     <div style="display: flex; justify-content: center; margin-bottom: 20px;">
       <button type="submit" class="btn btn-primary">Get List</button>
     </div>
     <div class="grid-container">
+
       <div class="grid-item">Sunday</div>
       <div class="grid-item">
         <select class="form-select" name="Sunday" id="sun">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Monday</div>
       <div class="grid-item">
         <select class="form-select" name="Monday" id="mon">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Tuesday</div>
       <div class="grid-item">
         <select class="form-select" name="Tuesday" id="tues">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Wednesday</div>
       <div class="grid-item">
         <select class="form-select" name="Wednesday" id="wed">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Thursday</div>
       <div class="grid-item">
         <select class="form-select" name="Thursday" id="thurs">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Friday</div>
       <div class="grid-item">
         <select class="form-select" name="Friday" id="fri">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+      
       <div class="grid-item">Saturday</div>
       <div class="grid-item">
         <select class="form-select" name="Saturday" id="sat">
+          <option value="" disabled selected>Choose a meal</option>
           {% for meal in meals %}
             <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
           {% endfor %}
         </select>
       </div>
+
     </div>
   </form>
 

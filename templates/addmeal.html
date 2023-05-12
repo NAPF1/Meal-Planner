@@ -8,8 +8,11 @@
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
 <style>
-
-
+  .card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 100px;
+  }
 </style>
 </head>
 <body class="bg-dark text-white">
@@ -28,32 +31,63 @@
             <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('meal') }}">Add Meal</a>
+            <a class="nav-link active" href="{{ url_for('meal') }}">View/Edit Meals</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-<h1 class="container-fluid py-5" style="color: #ADB5AD;" >Add Meal Plan</h1>
+<h1 class="container-fluid py-5 text-center">View/Edit Meal Plan</h1>
 
-<div class="container py-4" style="background-color: #2B3035;" >
+<div class="container py-4" style="background-color: #2B3035;">
    
-  <h1 style="color: #ADB5AD;">Create Meal</h1>
-  
-  <form method="post">
+  <h1 class="text-center">Add Meal</h1>
+
+  <h3>{{ message }} </h3>
+
+  <form method="POST">
     <div class="form-group">    
-      <input  class="form-control" id="mealName"  placeholder="Enter Meal Name"> 
+      <input class="form-control" id="mealName" name="mealName" placeholder="Enter Meal Name"> 
     </div>
     <br>
     <div class="form-group">    
-      <input  class="form-control" id="mealIngredients" placeholder="Enter Ingredients separated by coma (,)">
+      <input class="form-control" id="mealIngredients" name="mealIngredients" placeholder="Enter ingredients separated by comma (,)">
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Add Meal</button>
   </form>
 </div>
 
+<br>
+
+<div class="row">
+  {% for meal in meals %}
+    <div class="col-sm-3">
+      <div class="card text-white mb-3 text-center card" style="background-color: #2B3035">
+        <div class="card-body">
+          <h3 class="card-title"><u><b>{{ meal['name'] }}</b></u></h3>
+          <div class="mealCard">
+            <img src="{{ meal['img_url'] }}" class="card-img-top" alt="{{ meal['name'] }}" width="auto">
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-white" style="background-color: #2B3035"><b><u>Ingredients:</u></b></li>
+                {% for ing in meal['ingredients'] %}
+                  <li class="list-group-item text-white" style="background-color: #2B3035">{{ ing }}</li>   
+                {% endfor %}
+              </ul>
+              <ul>
+                <!-- For adding other API stuff if we want to the cards! -->
+                <!-- <li class="list-group-item text-white bg-dark">Calories: {{ calories }}</li> -->
+                <!-- <li class="list-group-item text-white bg-dark">Recipe: {{ recipe }}</li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %} 
+</div>
 
 </body>
 </html>
