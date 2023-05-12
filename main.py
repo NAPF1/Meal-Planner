@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
 from PIL import Image
-import requests
+import requests, random
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
@@ -67,6 +67,29 @@ def list():
 
     return render_template('list.html', ingredients=ingredients)
     
-@app.route('/meal')
+@app.route('/meal', methods=['GET', 'POST'])
 def meal():
-    return render_template('addmeal.html', meals=meals)
+    message = '' # For updating on POST requests only
+
+    if request.method == 'POST': # Avoid null references if get response
+        mealName = request.form.get('mealName') # User-entered name
+        mealIngs = request.form.get('mealIngredients') # User-entered ingredients (str)
+        mealIngredients = mealIngs.split(',') # List of user-entered ingredients
+        
+        message = 'Meal added succesfully!' # Default to success unless meal already exists
+        for meal in meals: # Checks for already already matching meal
+            if meal['name'] == mealName:
+                message = 'Error. Meal already exists in the plan.' # Error message for printing
+            
+        if message.__contains__('succesfully'): # Only adds if message not altered.
+            new_meal = { # Create dict from meal attributes
+                "name" : mealName,
+                "ingredients" : mealIngredients,
+                "img_url" : ""
+            }
+            meals.append(new_meal) # Append the meal to the list of dicts from meals.py
+
+    random.shuffle(meals) # Shuffle a new order every time for fresh look
+    return render_template('addmeal.html', meals=meals, message=message)
+    
+    
