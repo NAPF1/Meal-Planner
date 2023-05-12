@@ -52,13 +52,16 @@
   <!-- Heading of Page -->
   <h1 class="container-fluid py-5 text-center" >Start Your Weekly Meal Plan </h1>
 
-  <!-- Grid container for days and dropdown boxes containing all meals in meals.py -->
+  <!-- Grid container below and button are in this form -->
   <form id="meal-form" method="POST" action="{{ url_for('list') }}">
+    
+    <!-- Button for submitting all chosen meals to get grocery list -->
     <div style="display: flex; justify-content: center; margin-bottom: 20px;">
       <button type="submit" class="btn btn-primary">Get List</button>
     </div>
-    <div class="grid-container">
 
+    <!-- Grid container for days and dropdown boxes containing all meals in meals.py -->
+    <div class="grid-container">
       <div class="grid-item">Sunday</div>
       <div class="grid-item">
         <select class="form-select" name="Sunday" id="sun">
@@ -128,7 +131,6 @@
           {% endfor %}
         </select>
       </div>
-
     </div>
   </form>
 

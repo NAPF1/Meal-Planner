@@ -50,12 +50,14 @@
 
 <h1 class="container-fluid py-5 text-center" >Grocery List </h1>
 
+<!-- Same container as index.html. i is name and index using i reults in # of times in list -->
 <div class="grid-container">
   {% for i in ingredients %}
     <div class="grid-item">
       {{ i }}
     </div>
     <div class="grid-item">
+      <!-- Added the x here to make it look nicer for us human beings with real human eyes -->
       x{{ ingredients[i] }}
     </div>
   {% endfor %}

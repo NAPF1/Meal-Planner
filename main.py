@@ -47,31 +47,37 @@ def get_ingredients(names):
                     ingredients.append(ingredient) # Add each ingredient to master list
     return ingredients
 
+# Home route
 @app.route('/')
 def home():
     return render_template('index.html', meals=meals)
 
+# Grocery List route
 @app.route('/list', methods=['GET', 'POST'])
 def list():
-    selected_meals = []
-    for day in days:
-        selected_meals.append(request.form.get(day))
-    ings = get_ingredients(selected_meals)
+    selected_meals = [] # New list every time
+    
+    # Uses list of weekdays (top of file) to refer to the names of the dropdown choices
+    for day in days: 
+        selected_meals.append(request.form.get(day)) # Fetches and appends all chosen meal names
+    ings = get_ingredients(selected_meals) # Uses function to get ingredients from matching meals
 
-    ingredients = {}
-    for ing in ings:
-        if ing in ingredients:
-            ingredients[ing] += 1
+    ingredients = {} # Dict needed to append it to meals.py list of dicts
+    for ing in ings: # For each ingredient in the list
+        if ing in ingredients: # Checks for already existing ingredient
+            ingredients[ing] += 1 # Adds number for multiplier for simpler display
         else:
-            ingredients[ing] = 1
+            ingredients[ing] = 1 # It's a new one so add it and make it 1
 
+    # Loads list with the master list of combined ingredients from all selected meals
     return render_template('list.html', ingredients=ingredients)
     
+# View/Edit Meals route
 @app.route('/meal', methods=['GET', 'POST'])
 def meal():
     message = '' # For updating on POST requests only
 
-    if request.method == 'POST': # Avoid null references if get response
+    if request.method == 'POST': # Avoid null references if 'get' request
         mealName = request.form.get('mealName') # User-entered name
         mealIngs = request.form.get('mealIngredients') # User-entered ingredients (str)
         mealIngredients = mealIngs.split(',') # List of user-entered ingredients

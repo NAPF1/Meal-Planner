@@ -44,8 +44,11 @@
    
   <h1 class="text-center">Add Meal</h1>
 
+  <!-- 'GET' = message being completely blank and invisible -->
+  <!-- 'POST' = success or fail depending on if meal was already in the list -->
   <h3>{{ message }} </h3>
 
+  <!-- Form for submitting a new meal. reuest.form.get() uses the 'name' attribute from <input> -->
   <form method="POST">
     <div class="form-group">    
       <input class="form-control" id="mealName" name="mealName" placeholder="Enter Meal Name"> 
@@ -61,6 +64,7 @@
 
 <br>
 
+<!-- Loops through all the meals in the list and makes a card for each. col-sm-3 is best for 4 column viewing -->
 <div class="row">
   {% for meal in meals %}
     <div class="col-sm-3">
