@@ -69,4 +69,4 @@ def list():
     
 @app.route('/meal')
 def meal():
-    return render_template('addmeal.html')
+    return render_template('addmeal.html', meals=meals)
