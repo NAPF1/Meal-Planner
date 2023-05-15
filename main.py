@@ -27,13 +27,20 @@ def get_calories(ingredient):
     response = requests.get(api_url, headers={'X-Api-Key': 'k8A8yajuNt3XDt+amiDpOg==TcDK914bT5PP0tuz'})
     if response.status_code == 200:
         data = response.json()
-        print(data[0]['calories'])
-        print(data[0]['serving_size_g'])
-    print(response.status_code)
+        return data[0]['calories'], data[0]['serving_size_g']
+    else:
+        return None, None
 
 
-calories = get_calories('marinara sauce')
-print(calories)
+def get_meals_nutrition(meals):
+    for meal in meals:
+        for ingredient in meal['ingredients']:
+            calories, serving_size = get_calories(ingredient)
+            meal['calories'].append(calories)
+            meal['serving_size'].append(serving_size)
+    return meals
+
+get_meals_nutrition(meals)
 
 # image_url = get_pixabay_image('steak and rice')
 # print(image_url)
