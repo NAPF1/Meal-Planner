@@ -4,12 +4,136 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
+<style>
+  .grid-container {
+    display: grid;
+    margin: 0 auto;
+    grid-template-rows: repeat(7,1fr);
+    grid-template-columns: repeat(2,1fr);
+    background-color: #0361ad;
+    padding: 5px;
+    width: 50vw;
+  }
+  .grid-item {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
 </head>
 <body class="bg-dark text-white">
-    <h1>Weekly View</h1>
-    <br>
-    Hi I am the weekly view so far.
+    
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('meal') }}">View/Edit Meals</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Heading of Page -->
+  <h1 class="container-fluid py-5 text-center" >Start Your Weekly Meal Plan </h1>
+
+  <!-- Grid container below and button are in this form -->
+  <form id="meal-form" method="POST" action="{{ url_for('list') }}">
+    
+    <!-- Button for submitting all chosen meals to get grocery list -->
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+      <button type="submit" class="btn btn-primary">Get List</button>
+    </div>
+
+    <!-- Grid container for days and dropdown boxes containing all meals in meals.py -->
+    <div class="grid-container">
+      <div class="grid-item">Sunday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Sunday" id="sun">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Monday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Monday" id="mon">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Tuesday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Tuesday" id="tues">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Wednesday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Wednesday" id="wed">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Thursday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Thursday" id="thurs">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Friday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Friday" id="fri">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="grid-item">Saturday</div>
+      <div class="grid-item">
+        <select class="form-select" name="Saturday" id="sat">
+          <option value="" disabled selected>Choose a meal</option>
+          {% for meal in meals %}
+            <option value="{{ meal['name'] }}">{{ meal['name'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </form>
+
+
 </body>
 </html>
