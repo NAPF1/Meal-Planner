@@ -11,11 +11,11 @@
   .grid-container {
     display: grid;
     margin: 0 auto;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-template-rows: repeat(1,1fr);
     background-color: #0361ad;
     padding: 5px;
-    width: 50vw;
+    width: 80vw;
   }
   .grid-item {
     border: 1px solid rgba(0, 0, 0, 0.8);
@@ -59,10 +59,18 @@
     <div class="grid-item">
       <!-- Added the x here to make it look nicer for us human beings with real human eyes -->
       x{{ ingredients[i] }}
+    </div>  
+      <div class="grid-item">
+        {% for k in calories[loop.index0:loop.index0+1] %}
+        {{ k[0] }} cal
+        {% endfor %}
     </div>
+    <div class="grid-item">
+      {% for k in calories[loop.index0:loop.index0+1] %}
+      {{ k[1] }} g
+      {% endfor %}
+  </div>
   {% endfor %}
 </div>
-
-
 </body>
 </html>
