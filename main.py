@@ -125,7 +125,7 @@ def meal():
             new_meal = { # Create dict from meal attributes
                 "name" : mealName,
                 "ingredients" : mealIngredients,
-                "img_url" : ""
+                "img_url" : "https://play-lh.googleusercontent.com/JA0qswBq-iSo5HbTZyyqAEYEdQ-9JjmkNqxyCqAndO8JzHwKnRSzcGrKdhrshDxw4w"
             }
             meals.append(new_meal) # Append the meal to the list of dicts from meals.py
 
