@@ -22,7 +22,7 @@ Nightly meal-planning application for producing a weekly grocery list.
 
 # Future Work
 
-* Utilize OpenAI api to allow for meal suggestions based off user imputed ingredients
+* Utilize OpenAI api to allow for meal suggestions based off user inputted ingredients
 * Add recipes for new meals or for suggested meals
 * Allow for integration of Instacart or similar api to buy ingredients and have them delivered based off of what is displayed   on our site.
 
