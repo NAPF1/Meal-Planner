@@ -1,4 +1,11 @@
-from flask import Flask, render_template, request
+# Course: CST205-01 - Multimedia Design and Programming - Avner
+# Title: Meal Planner
+# Abstract: Nightly meal-planning application for producing a weekly grocery list.
+# Team: Nicolas Porras Falconio, Alexander Verdugo, Matthew Peters, Miguel Santiago
+# Date: 5/17/23
+# Link to Github: https://github.com/NAPF1/Meal-Planner
+
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
 from PIL import Image
@@ -124,5 +131,3 @@ def meal():
 
     random.shuffle(meals) # Shuffle a new order every time for fresh look
     return render_template('addmeal.html', meals=meals, message=message)
-    
-    
