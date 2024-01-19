@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
+from sides import sides_info as sides
 from PIL import Image
 import requests, random
 
@@ -8,28 +9,28 @@ app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-def get_pixabay_image(query):
-    print(type(query))
-    url = 'https://pixabay.com/api/28306119-deb558f16f7c1989434e2b594'
-    url2 = "https://pixabay.com/api/?key=28306119-deb558f16f7c1989434e2b594&q="
+# def get_pixabay_image(query):
+#     print(type(query))
+#     url = 'https://pixabay.com/api/28306119-deb558f16f7c1989434e2b594'
+#     url2 = "https://pixabay.com/api/?key=28306119-deb558f16f7c1989434e2b594&q="
    
-    response = requests.get(url2+query)
-    if response.status_code == 200:
-        data = response.json()
-        if data['totalHits'] > 0:
-            return data['hits'][0]['webformatURL']
-    print(response.status_code)
-    # else:
-    #     return None
+#     response = requests.get(url2+query)
+#     if response.status_code == 200:
+#         data = response.json()
+#         if data['totalHits'] > 0:
+#             return data['hits'][0]['webformatURL']
+#     print(response.status_code)
+#     # else:
+#     #     return None
 
-def get_calories(ingredient):
-    api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(ingredient)
-    response = requests.get(api_url, headers={'X-Api-Key': 'k8A8yajuNt3XDt+amiDpOg==TcDK914bT5PP0tuz'})
-    if response.status_code == 200:
-        data = response.json()
-        return data[0]['calories'], data[0]['serving_size_g']
-    else:
-        return None, None
+# def get_calories(ingredient):
+#     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(ingredient)
+#     response = requests.get(api_url, headers={'X-Api-Key': 'k8A8yajuNt3XDt+amiDpOg==TcDK914bT5PP0tuz'})
+#     if response.status_code == 200:
+#         data = response.json()
+#         return data[0]['calories'], data[0]['serving_size_g']
+#     else:
+#         return None, None
 
 # Old get nutritions function Do not use
 # def get_meals_nutrition(meals):
@@ -44,16 +45,16 @@ def get_calories(ingredient):
 #             meal['serving_size'].append(serving_size)
 #     return meals
 
-def get_meals_nutrition(names): # Updated get meal nutrition function
-    caloriesAndServingSize = []  # Calories and serving size list     
-    for meal in meals: # For each avaliable meal
-        for name in names: # And for each selected meal
-            if meal['name'] == name: # If the available meal matches a selected meal
-                for ingredient in meal['ingredients']: # Cycle through the ingredients
-                    caloriesAndSS= get_calories(ingredient) # Calling getCalories function to get calories and serving size
-                    caloriesAndServingSize.append(caloriesAndSS) # Appending to list of Calories and Serving size
+# def get_meals_nutrition(names): # Updated get meal nutrition function
+#     caloriesAndServingSize = []  # Calories and serving size list     
+#     for meal in meals: # For each avaliable meal
+#         for name in names: # And for each selected meal
+#             if meal['name'] == name: # If the available meal matches a selected meal
+#                 for ingredient in meal['ingredients']: # Cycle through the ingredients
+#                     caloriesAndSS= get_calories(ingredient) # Calling getCalories function to get calories and serving size
+#                     caloriesAndServingSize.append(caloriesAndSS) # Appending to list of Calories and Serving size
                     
-    return caloriesAndServingSize # Returning the Calories and Serving size list
+#     return caloriesAndServingSize # Returning the Calories and Serving size list
 
 
 # image_url = get_pixabay_image('steak and rice')
@@ -66,12 +67,17 @@ def get_ingredients(names):
             if meal['name'] == name: # If the available meal matches a selected meal
                 for ingredient in meal['ingredients']: # Cycle thorugh those ingredients
                     ingredients.append(ingredient) # Add each ingredient to master list
+    for side in sides: # For each available meal
+        for name in names: # And for each selected meal
+            if side['name'] == name: # If the available meal matches a selected meal
+                for ingredient in side['ingredients']: # Cycle thorugh those ingredients
+                    ingredients.append(ingredient) # Add each ingredient to master list
     return ingredients
 
 # Home route
 @app.route('/')
 def home():
-    return render_template('index.html', meals=meals)
+    return render_template('index.html', meals=meals, sides=sides)
 
 # Grocery List route (Displays EMPTY grid when routed from navbar!)
 @app.route('/list', methods=['GET', 'POST'])
@@ -80,8 +86,12 @@ def list():
    
     # Uses list of weekdays (top of file) to refer to the names of the dropdown choices
     for day in days: 
+        print(request.form.get(day))
         selected_meals.append(request.form.get(day)) # Fetches and appends all chosen meal names
-    cals = get_meals_nutrition(selected_meals)  # Uses function to get calories and serving size from ingredients
+        for i in range(0,3):
+            print(request.form.get(f"{day}{i}"))
+            selected_meals.append(request.form.get(f"{day}{i}"))
+    # cals = get_meals_nutrition(selected_meals)  # Uses function to get calories and serving size from ingredients
     ings = get_ingredients(selected_meals) # Uses function to get ingredients from matching meals
     
     ingredients = {} # Dict needed to append it to meals.py list of dicts
@@ -90,14 +100,16 @@ def list():
             ingredients[ing] += 1 # Adds number for multiplier for simpler display
         else:
             ingredients[ing] = 1 # It's a new one so add it and make it 1
+    ingredients = dict(sorted(ingredients.items()))
     
-    calories = [] # List needed to append it to meals.py list 
-    for cal in cals: # For each calories in the list append to the calories list above
-        calories.append(cal)
+    # calories = [] # List needed to append it to meals.py list 
+    # for cal in cals: # For each calories in the list append to the calories list above
+    #     calories.append(cal)
 
 
     # Loads list with the master list of combined ingredients from all selected meals
-    return render_template('list.html', ingredients=ingredients, calories=calories)
+    # return render_template('list.html', ingredients=ingredients, calories=calories)
+    return render_template('list.html', ingredients=ingredients)
     
 # View/Edit Meals route
 @app.route('/meal', methods=['GET', 'POST'])
@@ -118,7 +130,7 @@ def meal():
             new_meal = { # Create dict from meal attributes
                 "name" : mealName,
                 "ingredients" : mealIngredients,
-                "img_url" : "https://play-lh.googleusercontent.com/JA0qswBq-iSo5HbTZyyqAEYEdQ-9JjmkNqxyCqAndO8JzHwKnRSzcGrKdhrshDxw4w"
+                # "img_url" : "https://play-lh.googleusercontent.com/JA0qswBq-iSo5HbTZyyqAEYEdQ-9JjmkNqxyCqAndO8JzHwKnRSzcGrKdhrshDxw4w"
             }
             meals.append(new_meal) # Append the meal to the list of dicts from meals.py
 
