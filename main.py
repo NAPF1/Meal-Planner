@@ -1,10 +1,3 @@
-# Course: CST205-01 - Multimedia Design and Programming - Avner
-# Title: Meal Planner
-# Abstract: Nightly meal-planning application for producing a weekly grocery list.
-# Team: Nicolas Porras Falconio, Alexander Verdugo, Matthew Peters, Miguel Santiago
-# Date: 5/17/23
-# Link to Github: https://github.com/NAPF1/Meal-Planner
-
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from meals import meals_info as meals
