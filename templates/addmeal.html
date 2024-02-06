@@ -8,6 +8,12 @@
     <title>Meal Planner</title>
     {{ bootstrap.load_css() }}
 <style>
+  body {
+    background: #0F2027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: white;
+  }
   .card {
     margin: 0 auto;
     float: none;
@@ -16,8 +22,9 @@
 </style>
 </head>
 <body class="bg-dark text-white">
-  
-  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-md mb-4">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,13 +32,16 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
+            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Weekly View</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('list') }}">Grocery List</a>
+            <a class="nav-link" href="{{ url_for('list') }}">Weekly List</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('meal') }}">View/Edit Meals</a>
+            <a class="nav-link" href="{{ url_for('meal') }}">View/Edit Meals</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('ingredients') }}">All Ingredients</a>
           </li>
         </ul>
       </div>
@@ -40,9 +50,9 @@
 
 <h1 class="container-fluid py-5 text-center">View/Edit Meal Plan</h1>
 
-<div class="container py-4" style="background-color: #2B3035;">
+<div class="container py-4" style="background-color: #2b3035c4;">
    
-  <h1 class="text-center">Add Meal</h1>
+  <h1 class="text-center">Add Meal/Side</h1>
 
   <!-- 'GET' = message being completely blank and invisible -->
   <!-- 'POST' = success or fail depending on if meal was already in the list -->
@@ -51,11 +61,18 @@
   <!-- Form for submitting a new meal. reuest.form.get() uses the 'name' attribute from <input> -->
   <form method="POST">
     <div class="form-group">    
-      <input class="form-control" id="mealName" name="mealName" placeholder="Enter Meal Name"> 
+      <input class="form-control" id="name" name="name" placeholder="Name"> 
     </div>
     <br>
     <div class="form-group">    
-      <input class="form-control" id="mealIngredients" name="mealIngredients" placeholder="Enter ingredients separated by comma (,)">
+      <input class="form-control" id="ingredients" name="ingredients" placeholder="Ingredients separated by comma (,)">
+    </div>
+    <br>
+    <div class="form-group">
+      <select class="form-control" id="type" name="type">
+        <option value="meal">Main</option>
+        <option value="side">Side</option>
+      </select>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Add Meal</button>
@@ -68,16 +85,15 @@
 <div class="row">
   {% for meal in meals %}
     <div class="col-sm-3">
-      <div class="card text-white mb-3 text-center card" style="background-color: #2B3035">
+      <div class="card text-white mb-3 text-center card" style="background-color: #2b3035c4;">
         <div class="card-body">
           <h3 class="card-title"><u><b>{{ meal['name'] }}</b></u></h3>
           <div class="mealCard">
-            <img src="{{ meal['img_url'] }}" class="card-img-top" alt="{{ meal['name'] }}" width="auto">
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item text-white" style="background-color: #2B3035"><b><u>Ingredients:</u></b></li>
+            <div class="card-body" style="background-color: #2b3035c4;">
+              <ul class="list-group list-group-flush" style="background-color: #2b3035c4;">
+                <li class="list-group-item" style="color: white; background-color: #2b3035c4;"><b><u>Ingredients:</u></b></li>
                 {% for ing in meal['ingredients'] %}
-                  <li class="list-group-item text-white" style="background-color: #2B3035">{{ ing }}</li>   
+                  <li class="list-group-item" style="color: white; background-color: #2b3035c4;">{{ ing }}</li>   
                 {% endfor %}
               </ul>
               <ul>
@@ -92,6 +108,7 @@
     </div>
   {% endfor %} 
 </div>
+
 
 </body>
 </html>

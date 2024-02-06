@@ -9,56 +9,14 @@ app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-# def get_pixabay_image(query):
-#     print(type(query))
-#     url = 'https://pixabay.com/api/28306119-deb558f16f7c1989434e2b594'
-#     url2 = "https://pixabay.com/api/?key=28306119-deb558f16f7c1989434e2b594&q="
-   
-#     response = requests.get(url2+query)
-#     if response.status_code == 200:
-#         data = response.json()
-#         if data['totalHits'] > 0:
-#             return data['hits'][0]['webformatURL']
-#     print(response.status_code)
-#     # else:
-#     #     return None
-
-# def get_calories(ingredient):
-#     api_url = 'https://api.api-ninjas.com/v1/nutrition?query={}'.format(ingredient)
-#     response = requests.get(api_url, headers={'X-Api-Key': 'k8A8yajuNt3XDt+amiDpOg==TcDK914bT5PP0tuz'})
-#     if response.status_code == 200:
-#         data = response.json()
-#         return data[0]['calories'], data[0]['serving_size_g']
-#     else:
-#         return None, None
-
-# Old get nutritions function Do not use
-# def get_meals_nutrition(meals):
-#     for meal in meals:
-#         #meal['calories'] = []  # Initialize 'calories' list
-#         #meal['serving_size'] = []  # Initialize 'serving_size' list
-#         calories = []
-#         serving_size = []
-#         for ingredient in meal['ingredients']:
-#             calories, serving_size = get_calories(ingredient)
-#             meal['calories'].append(calories)
-#             meal['serving_size'].append(serving_size)
-#     return meals
-
-# def get_meals_nutrition(names): # Updated get meal nutrition function
-#     caloriesAndServingSize = []  # Calories and serving size list     
-#     for meal in meals: # For each avaliable meal
-#         for name in names: # And for each selected meal
-#             if meal['name'] == name: # If the available meal matches a selected meal
-#                 for ingredient in meal['ingredients']: # Cycle through the ingredients
-#                     caloriesAndSS= get_calories(ingredient) # Calling getCalories function to get calories and serving size
-#                     caloriesAndServingSize.append(caloriesAndSS) # Appending to list of Calories and Serving size
-                    
-#     return caloriesAndServingSize # Returning the Calories and Serving size list
-
-
-# image_url = get_pixabay_image('steak and rice')
-# print(image_url)
+def get_all_ingredients():
+    allIngredients = set()  # Using a set to automatically remove duplicates
+    for meal in meals:
+        allIngredients.update(meal['ingredients'])
+    for side in sides:
+        allIngredients.update(side['ingredients'])
+    print(allIngredients)
+    return sorted(allIngredients)
 
 def get_ingredients(names):
     ingredients = [] # Master ingredients list for populating div in list.html
@@ -117,22 +75,39 @@ def meal():
     message = '' # For updating on POST requests only
 
     if request.method == 'POST': # Avoid null references if 'get' request
-        mealName = request.form.get('mealName') # User-entered name
-        mealIngs = request.form.get('mealIngredients') # User-entered ingredients (str)
-        mealIngredients = mealIngs.split(',') # List of user-entered ingredients
+        name = request.form.get('name') # User-entered name
+        ings = request.form.get('ingredients') # User-entered ingredients (str)
+        drop = request.form.get('type') # User-entered type of meal
+        ingredients = ings.split(',') # List of user-entered ingredients
         
-        message = 'Meal added succesfully!' # Default to success unless meal already exists
+        message = 'Added succesfully!' # Default to success unless meal already exists
         for meal in meals: # Checks for already already matching meal
-            if meal['name'] == mealName:
-                message = 'Error. Meal already exists in the plan.' # Error message for printing
-            
-        if message.__contains__('succesfully'): # Only adds if message not altered.
-            new_meal = { # Create dict from meal attributes
-                "name" : mealName,
-                "ingredients" : mealIngredients,
-                # "img_url" : "https://play-lh.googleusercontent.com/JA0qswBq-iSo5HbTZyyqAEYEdQ-9JjmkNqxyCqAndO8JzHwKnRSzcGrKdhrshDxw4w"
-            }
-            meals.append(new_meal) # Append the meal to the list of dicts from meals.py
+            if meal['name'] == name:
+                message = 'Error. Meal already exists.' # Error message for printing
+        for side in sides:
+            if side['name'] == name:
+                message = 'Error. Side already exists.' # Error message for printing
+
+        if message.__contains__('succesfully'):
+            if drop == "Main": # Only adds if message not altered.
+                new_meal = { # Create dict from meal attributes
+                    "name" : name,
+                    "ingredients" : ingredients,
+                    # "img_url" : ""
+                }
+                meals.append(new_meal) # Append the meal to the list of dicts from meals.py
+            elif drop == "Side":
+                new_side = { # Create dict from meal attributes
+                    "name" : name,
+                    "ingredients" : ingredients,
+                    # "img_url" : ""
+                }
+                sides.append(new_side) # Append the meal to the list of dicts from meals.py
 
     random.shuffle(meals) # Shuffle a new order every time for fresh look
     return render_template('addmeal.html', meals=meals, message=message)
+
+@app.route('/ingredients', methods=['GET', 'POST'])
+def ingredients():
+    all_ingredients = get_all_ingredients()  # Implement a function to get all ingredients
+    return render_template('ingredients.html', allIngredients=all_ingredients)
